@@ -282,7 +282,7 @@
                     <div class="easel-frame"></div>
                     <div class="skyline-webcam-container">
                         <div class="skyline-header">
-                            <img src="dipinti giulio/1.jpg" alt="Opera in corso" class="fake-webcam">
+                            <img src="dipinti giulio/1.jpg" alt="Opera in corso" class="fake-webcam" id="liveOpera">
                             <div class="skyline-overlay">
                                 <div class="skyline-logo">SKYLINE WEBCAMS</div>
                                 <div class="live-badge">LIVE</div>
@@ -399,6 +399,14 @@
                 updateViewerText();
             }
         }, 8000); // Aggiorna ogni 8 secondi
+
+        // Aggiungi questo codice per caricare l'opera live salvata
+        window.addEventListener('load', function() {
+            const savedLiveOpera = localStorage.getItem('currentLiveOpera');
+            if (savedLiveOpera) {
+                document.getElementById('liveOpera').src = savedLiveOpera;
+            }
+        });
     </script>
 </body>
 </html> 
