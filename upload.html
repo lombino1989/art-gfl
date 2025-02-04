@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Galleria - Studio d'Arte</title>
+    <style>
+        body {
+            background: linear-gradient(rgba(26, 26, 26, 0.85), rgba(26, 26, 26, 0.85)),
+                        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(26, 26, 26, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #FFCC00;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .upload-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .file-input-container {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .file-input-button {
+            background: #FFCC00;
+            color: #1a1a1a;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .file-input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .preview-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border: 2px solid #FFCC00;
+            border-radius: 4px;
+        }
+
+        .upload-button {
+            background: #FFCC00;
+            color: #1a1a1a;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .upload-button:hover {
+            background-color: #FFD700;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #444;
+        }
+
+        .gallery-preview {
+            margin-top: 30px;
+        }
+
+        .gallery-preview h2 {
+            color: #FFCC00;
+            margin-bottom: 20px;
+        }
+
+        .existing-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .image-container {
+            position: relative;
+        }
+
+        .delete-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 0, 0, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .delete-button:hover {
+            background: rgba(255, 0, 0, 1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestione Galleria</h1>
+        
+        <div id="loginSection" style="display: none;">
+            <form id="loginForm" class="upload-form">
+                <h2 style="color: #FFCC00;">Accesso Amministratore</h2>
+                <input type="password" id="adminPassword" placeholder="Password Amministratore" 
+                    style="padding: 10px; margin: 10px 0; width: 100%; border-radius: 5px; border: none;">
+                <button type="submit" class="upload-button">Accedi</button>
+            </form>
+        </div>
+
+        <div id="uploadSection" style="display: none;">
+            <div class="upload-section">
+                <form class="upload-form" id="uploadForm">
+                    <div class="file-input-container">
+                        <label class="file-input-button">
+                            Seleziona Immagini
+                            <input type="file" class="file-input" id="imageInput" multiple accept="image/*">
+                        </label>
+                    </div>
+                    <div class="preview-container" id="previewContainer"></div>
+                    <button type="submit" class="upload-button">Carica Immagini</button>
+                </form>
+            </div>
+
+            <div class="gallery-preview">
+                <h2>Immagini nella Galleria</h2>
+                <div class="existing-images" id="existingImages">
+                    <!-- Le immagini esistenti verranno caricate qui -->
+                </div>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-button">Torna alla Home</a>
+    </div>
+
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const uploadForm = document.getElementById('uploadForm');
+        const existingImages = document.getElementById('existingImages');
+        const loginSection = document.getElementById('loginSection');
+        const uploadSection = document.getElementById('uploadSection');
+        const loginForm = document.getElementById('loginForm');
+        
+        // Verifica se l'utente è già autenticato
+        function checkAuth() {
+            const isAuth = sessionStorage.getItem('adminAuth');
+            if (isAuth === 'true') {
+                loginSection.style.display = 'none';
+                uploadSection.style.display = 'block';
+                loadExistingImages();
+            } else {
+                loginSection.style.display = 'block';
+                uploadSection.style.display = 'none';
+            }
+        }
+
+        // Gestione del login
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('adminPassword').value;
+            
+            // Utilizziamo la stessa password dell'admin panel
+            if (password === 'POlonia1@@') {
+                sessionStorage.setItem('adminAuth', 'true');
+                checkAuth();
+            } else {
+                alert('Password non valida');
+            }
+        });
+
+        // Verifica l'autenticazione all'avvio
+        checkAuth();
+
+        // Anteprima delle immagini selezionate
+        imageInput.addEventListener('change', function(e) {
+            previewContainer.innerHTML = '';
+            const files = Array.from(e.target.files);
+            
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('preview-image');
+                    previewContainer.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            });
+        });
+
+        // Gestione dell'upload
+        uploadForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData();
+            const files = imageInput.files;
+
+            for (let i = 0; i < files.length; i++) {
+                formData.append('images', files[i]);
+            }
+
+            try {
+                // Qui dovresti implementare la logica per salvare le immagini
+                // Per ora mostreremo solo un alert
+                alert('Funzionalità di upload da implementare sul server');
+                
+                // Dopo il successo, pulisci il form
+                uploadForm.reset();
+                previewContainer.innerHTML = '';
+                loadExistingImages(); // Ricarica le immagini esistenti
+            } catch (error) {
+                console.error('Errore durante l\'upload:', error);
+                alert('Si è verificato un errore durante l\'upload');
+            }
+        });
+
+        // Carica le immagini esistenti
+        function loadExistingImages() {
+            if (sessionStorage.getItem('adminAuth') !== 'true') {
+                return;
+            }
+            // Qui dovresti caricare le immagini esistenti dal server
+            // Per ora mostreremo delle immagini di esempio
+            const images = document.querySelectorAll('.gallery-grid img');
+            existingImages.innerHTML = '';
+            
+            images.forEach(img => {
+                const container = document.createElement('div');
+                container.classList.add('image-container');
+                
+                const newImg = document.createElement('img');
+                newImg.src = img.src;
+                newImg.classList.add('preview-image');
+                
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('delete-button');
+                deleteButton.innerHTML = '×';
+                deleteButton.onclick = () => {
+                    if (confirm('Sei sicuro di voler eliminare questa immagine?')) {
+                        container.remove();
+                        // Qui dovresti implementare la logica per eliminare l'immagine dal server
+                    }
+                };
+                
+                container.appendChild(newImg);
+                container.appendChild(deleteButton);
+                existingImages.appendChild(container);
+            });
+        }
+    </script>
+</body>
+</html> 
