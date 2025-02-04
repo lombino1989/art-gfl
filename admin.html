@@ -299,19 +299,16 @@
                 }
             });
 
-            // Salva la selezione nel localStorage
+            // Salva la selezione nel localStorage con timestamp
+            const liveOperaData = {
+                path: imagePath,
+                timestamp: new Date().getTime()
+            };
             localStorage.setItem('currentLiveOpera', imagePath);
+            localStorage.setItem('liveOperaTimestamp', new Date().getTime());
             
-            // Aggiorna anche l'immagine nella home page
-            updateLiveOperaOnHome(imagePath);
-        }
-
-        function updateLiveOperaOnHome(imagePath) {
-            // Trova l'immagine della webcam nella home e aggiornala
-            const fakeWebcam = document.querySelector('.fake-webcam');
-            if (fakeWebcam) {
-                fakeWebcam.src = imagePath;
-            }
+            // Notifica l'utente
+            alert('Opera in live aggiornata con successo!');
         }
 
         // Carica l'opera live salvata al caricamento della pagina

@@ -400,13 +400,28 @@
             }
         }, 8000); // Aggiorna ogni 8 secondi
 
-        // Aggiungi questo codice per caricare l'opera live salvata
-        window.addEventListener('load', function() {
+        // Funzione per controllare gli aggiornamenti dell'opera live
+        function checkLiveOperaUpdates() {
+            const currentLiveOpera = document.getElementById('liveOpera').src;
             const savedLiveOpera = localStorage.getItem('currentLiveOpera');
-            if (savedLiveOpera) {
+            
+            if (savedLiveOpera && !currentLiveOpera.includes(savedLiveOpera)) {
                 document.getElementById('liveOpera').src = savedLiveOpera;
             }
+        }
+
+        // Controlla gli aggiornamenti ogni 5 secondi
+        setInterval(checkLiveOperaUpdates, 5000);
+
+        // Controlla anche quando la pagina torna in primo piano
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                checkLiveOperaUpdates();
+            }
         });
+
+        // Carica l'opera live all'avvio
+        window.addEventListener('load', checkLiveOperaUpdates);
     </script>
 </body>
 </html> 
