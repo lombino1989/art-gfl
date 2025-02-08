@@ -2,97 +2,122 @@
 <html lang="it">
 <head>
     <meta charset="utf-8">
-    <title>Studio d'Arte - Galleria Online</title>
-    <meta name="description" content="Galleria d'arte online con opere originali dell'artista. Quadri e dipinti a olio disponibili per l'acquisto.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Studio d'Arte G.F.L - Galleria Online</title>
+    <meta name="description" content="Galleria d'arte online con opere originali dell'artista. Quadri e dipinti disponibili per l'acquisto.">
     
     <!-- Stili CSS -->
     <style>
         body {
-            background: linear-gradient(rgba(26, 26, 26, 0.85), rgba(26, 26, 26, 0.85)),
-                        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') no-repeat center center fixed;
-            background-size: cover;
-            color: #ffffff;
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
+            background: #ffffff;
+            color: #000080;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            min-height: 100vh;
+            text-align: center;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            text-align: center;
-            background: rgba(26, 26, 26, 0.8);
             padding: 20px;
-            border-radius: 8px;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .header {
-            margin-bottom: 40px;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 204, 0, 0.2);
-        }
-
-        .title, .subtitle {
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
         }
 
         .title {
-            font-size: 3em;
-            color: #FFCC00;
-            margin-bottom: 20px;
-            animation: fadeIn 2s ease-in-out;
+            color: #000080;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            margin: 20px 0;
         }
 
         .subtitle {
-            font-size: 2em;
-            color: #FFCC00;
-            animation: fadeIn 2.5s ease-in-out;
-        }
-
-        .gallery-image {
-            max-width: 100%;
-            height: auto;
+            color: #8A0035;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
             margin: 20px 0;
-            border: 3px solid rgba(255, 204, 0, 0.5);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: zoom-in;
         }
 
-        .gallery-image:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 204, 0, 0.2);
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 15px 30px;
-            background-color: #FFCC00;
-            color: #1a1a1a;
-            text-decoration: none;
-            border-radius: 5px;
+        .artist-name {
+            color: #800000;
+            font-family: "Ink Free", cursive;
+            font-size: 32px;
             font-weight: bold;
             margin: 20px 0;
-            transition: background-color 0.3s, transform 0.3s;
         }
 
-        .cta-button:hover {
-            background-color: #FFD700;
-            transform: translateY(-5px);
+        .streaming-title {
+            color: #C9620E;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            margin: 15px 0;
+        }
+
+        .streaming-description {
+            color: #C9620E;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            max-width: 800px;
+            margin: 15px auto;
         }
 
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 30px;
             padding: 20px;
+        }
+
+        .gallery-item {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .gallery-image {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+            border: none;
+            transition: transform 0.2s ease;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            font-family: Arial, sans-serif;
+            color: #000000;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .contact {
+            margin-top: 30px;
+            padding: 20px;
+        }
+
+        .contact a {
+            color: #000080;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .contact a:hover {
+            color: #8A0035;
+        }
+
+        .cookie-policy {
+            background-color: #FFCC00;
+            padding: 10px;
+            margin: 20px 0;
+        }
+
+        .cookie-policy a {
+            color: #111111;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            text-decoration: none;
         }
 
         .lightbox {
@@ -102,7 +127,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(255, 255, 255, 0.95);
             z-index: 1000;
             cursor: pointer;
         }
@@ -115,80 +140,191 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            border: 3px solid #FFCC00;
-            box-shadow: 0 0 25px rgba(255, 204, 0, 0.5);
         }
 
         .close-lightbox {
             position: absolute;
             top: 20px;
             right: 20px;
-            color: #FFCC00;
-            font-size: 30px;
+            color: #000080;
+            font-size: 40px;
             cursor: pointer;
             z-index: 1001;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .webcam-section {
+            margin: 40px auto;
+            max-width: 1000px;
+            text-align: center;
         }
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+        .webcam-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background: #000;
+            border-radius: 4px;
+            overflow: hidden;
         }
 
-        /* Stili per la sezione contatti */
-        .contact {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
+        .webcam-frame {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
         }
 
-        .contact p {
-            margin: 10px 0;
+        .webcam-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(110%) contrast(105%);
         }
 
-        .contact a {
-            color: #FFCC00;
-            text-decoration: none;
-            transition: color 0.3s;
+        .webcam-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(0, 0, 0, 0.1) 0%,
+                rgba(0, 0, 0, 0.05) 50%,
+                rgba(0, 0, 0, 0.1) 100%
+            );
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
         }
 
-        .contact a:hover {
-            color: #FFD700;
+        .skyline-logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            max-width: 120px;
+            height: auto;
+            z-index: 2;
+        }
+
+        .webcam-placeholder {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .webcam-text {
+            font-size: 24px;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .webcam-stats {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .viewers-count, .total-views {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .viewers-count i {
+            color: #ff0000;
+        }
+
+        #currentViewers, #totalViews {
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header class="header">
-            <h1 class="title">Studio D'arte G.F.L</h1>
-            <h2 class="subtitle">Galleria d'Arte</h2>
-        </header>
+        <div class="header">
+            <h1 class="title">Benvenuti nel sito di Studio D'arte G.F.L</h1>
+            <h2 class="subtitle">Paesaggi e Ritratti</h2>
+            <h2 class="artist-name">Artedalvivo</h2>
+            <h2 class="artist-name">L'Artista in diretta</h2>
+            <p class="streaming-title">Diretta streaming dallo studio</p>
+            <p class="streaming-description">L'artista dipinge in diretta dal suo studio, puoi seguire dal vivo la creazione delle sue opere, e realizzare la tua collezione a prezzi accessibili!</p>
+        </div>
 
         <section class="gallery">
-            <h3>Le mie opere</h3>
             <div class="gallery-grid">
-                <img src="dipinti giulio/1.jpg" alt="Dipinto 1" class="gallery-image">
-		<img src="dipinti giulio/2.jpg" alt="Dipinto 2" class="gallery-image">
- 		<img src="dipinti giulio/3.jpg" alt="Dipinto 3" class="gallery-image">		
-                <img src="dipinti giulio/4.jpg" alt="Dipinto 4" class="gallery-image">
-                <img src="dipinti giulio/5.jpg" alt="Dipinto 5" class="gallery-image">
-</div>
+                <div class="gallery-item">
+                    <img src="dipinti giulio/1.jpg" alt="Dipinto 1" class="gallery-image">
+                    <p class="image-caption">Acquerello su Carta - Clicca sulla foto per il prezzo</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="dipinti giulio/2.jpg" alt="Dipinto 2" class="gallery-image">
+                    <p class="image-caption">Acquerello su Carta - Clicca sulla foto per il prezzo</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="dipinti giulio/3.jpg" alt="Dipinto 3" class="gallery-image">
+                    <p class="image-caption">Acquerello su Carta - Clicca sulla foto per il prezzo</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="dipinti giulio/4.jpg" alt="Dipinto 4" class="gallery-image">
+                    <p class="image-caption">Acquerello su Carta - Clicca sulla foto per il prezzo</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="dipinti giulio/5.jpg" alt="Dipinto 5" class="gallery-image">
+                    <p class="image-caption">Acquerello su Carta - Clicca sulla foto per il prezzo</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Webcam Section -->
+        <section class="webcam-section">
+            <div class="webcam-container">
+                <div class="webcam-frame">
+                    <img src="dipinti giulio/1.jpg" alt="Studio Live" class="webcam-background">
+                    <div class="webcam-overlay">
+                        <img src="https://www.skylinewebcams.com/images/logo.png" alt="Skyline Webcams" class="skyline-logo">
+                        <div class="webcam-placeholder">
+                        </div>
+                        <div class="webcam-stats">
+                            <div class="viewers-count">
+                                <i class="fas fa-eye"></i>
+                                <span id="currentViewers">0</span> watching
+                            </div>
+                            <div class="total-views">
+                                <span id="totalViews">0</span> total views
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="streaming-title">Live Webcam</p>
         </section>
 
         <section class="contact">
-            <h3>Contatti</h3>
+            <h3 style="color: #000080; font-size: 24px;">Contatti</h3>
             <p>Per informazioni e acquisti:</p>
             <p>WhatsApp: <a href="https://wa.me/393803899860" target="_blank">+39 3803899860</a></p>
-            <a href="#" class="cta-button">Visualizza opere disponibili</a>
-            <p><a href="admin.html" style="color: #FFCC00;">Admin</a></p>
-            <p><a href="upload.html" style="color: #FFCC00;">Gestione Galleria</a></p>
+            <p><a href="admin.html">Admin</a></p>
+            <p><a href="upload.html">Gestione Galleria</a></p>
         </section>
+
+        <div class="cookie-policy">
+            <a href="/policy.html" target="_blank">Cookie Policy</a>
+        </div>
     </div>
 
     <!-- Lightbox -->
@@ -199,32 +335,61 @@
 
     <!-- Script per il lightbox -->
     <script>
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const closeBtn = document.querySelector('.close-lightbox');
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.gallery-image');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeLightbox = document.querySelector('.close-lightbox');
 
-        document.querySelectorAll('.gallery-image').forEach(image => {
-            image.addEventListener('click', e => {
-                lightbox.style.display = 'block';
-                lightboxImg.src = e.target.src;
+            images.forEach(image => {
+                image.addEventListener('click', () => {
+                    lightbox.style.display = 'block';
+                    lightboxImg.src = image.src;
+                });
+            });
+
+            lightbox.addEventListener('click', (e) => {
+                if (e.target !== lightboxImg) {
+                    lightbox.style.display = 'none';
+                }
+            });
+
+            closeLightbox.addEventListener('click', () => {
+                lightbox.style.display = 'none';
             });
         });
+    </script>
 
-        lightbox.addEventListener('click', e => {
-            if (e.target !== lightboxImg) {
-                lightbox.style.display = 'none';
-            }
-        });
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-        closeBtn.addEventListener('click', () => {
-            lightbox.style.display = 'none';
-        });
+    <!-- Script to update viewers randomly -->
+    <script>
+        function updateViewers() {
+            const currentViewersElement = document.getElementById('currentViewers');
+            const totalViewsElement = document.getElementById('totalViews');
+            
+            // Get saved total views from localStorage or start from 0
+            let totalViews = parseInt(localStorage.getItem('totalViews')) || 0;
+            totalViewsElement.textContent = totalViews;
+            
+            setInterval(() => {
+                // Random number between 0 and 15 viewers
+                const newViewers = Math.floor(Math.random() * 16);
+                currentViewersElement.textContent = newViewers;
+                
+                // Increment total views occasionally
+                if (Math.random() > 0.7) { // 30% chance to increment
+                    totalViews++;
+                    totalViewsElement.textContent = totalViews;
+                    // Save to localStorage
+                    localStorage.setItem('totalViews', totalViews.toString());
+                }
+            }, 3000); // Update every 3 seconds
+        }
 
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') {
-                lightbox.style.display = 'none';
-            }
-        });
+        // Start updating viewers when page loads
+        document.addEventListener('DOMContentLoaded', updateViewers);
     </script>
 </body>
 </html>
