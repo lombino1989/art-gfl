@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="it">
 <head>
     <meta http-equiv="Content-Language" content="it">
@@ -9,7 +9,94 @@
     <meta name="geo.region" content="it"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family: Arial, sans-serif; }
+        body { 
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Webcam Container Styles */
+        .webcam-container {
+            position: relative;
+            max-width: 800px;
+            margin: 20px auto;
+            border: 2px solid #003366;
+            background: #fff;
+        }
+        .webcam-header {
+            background: #003366;
+            color: white;
+            padding: 5px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .webcam-logo {
+            color: #4488ff;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .webcam-stats {
+            background: #003366;
+            color: white;
+            padding: 5px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .live-indicator {
+            background: #ff0000;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .apply-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .apply-button:hover {
+            background: #45a049;
+        }
+
+        /* Gallery Styles */
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+        .gallery-item {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .gallery-image {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+            border: none;
+            transition: transform 0.2s ease;
+        }
+        .gallery-image:hover {
+            transform: scale(1.02);
+        }
+        .image-caption {
+            font-family: Arial, sans-serif;
+            color: #000000;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        /* Painting Container Styles */
         .painting-container { text-align: center; margin: 20px 0; }
         .painting-image { max-width: 350px; height: auto; }
         .price-info { font-size: 18px; color: #800000; margin: 10px 0; }
@@ -56,37 +143,6 @@
             font-weight: bold;
             max-width: 800px;
             margin: 15px auto;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 20px;
-        }
-
-        .gallery-item {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .gallery-image {
-            max-width: 100%;
-            height: auto;
-            margin: 10px 0;
-            border: none;
-            transition: transform 0.2s ease;
-        }
-
-        .gallery-image:hover {
-            transform: scale(1.02);
-        }
-
-        .image-caption {
-            font-family: Arial, sans-serif;
-            color: #000000;
-            margin: 10px 0;
-            font-size: 16px;
         }
 
         .contact {
@@ -149,107 +205,6 @@
             z-index: 1001;
         }
 
-        .webcam-section {
-            margin: 40px auto;
-            max-width: 1000px;
-            text-align: center;
-        }
-
-        .webcam-container {
-            position: relative;
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-            background: #000;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .webcam-frame {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            overflow: hidden;
-        }
-
-        .webcam-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(110%) contrast(105%);
-        }
-
-        .webcam-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                135deg,
-                rgba(0, 0, 0, 0.1) 0%,
-                rgba(0, 0, 0, 0.05) 50%,
-                rgba(0, 0, 0, 0.1) 100%
-            );
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-        }
-
-        .skyline-logo {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            max-width: 120px;
-            height: auto;
-            z-index: 2;
-        }
-
-        .webcam-placeholder {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            font-family: Arial, sans-serif;
-        }
-
-        .webcam-text {
-            font-size: 24px;
-            color: #fff;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-        }
-
-        .webcam-stats {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 15px;
-            background: rgba(0, 0, 0, 0.5);
-            color: #fff;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-        }
-
-        .viewers-count, .total-views {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .viewers-count i {
-            color: #ff0000;
-        }
-
-        #currentViewers, #totalViews {
-            font-weight: bold;
-        }
-
         .modal {
             display: none;
             position: fixed;
@@ -291,54 +246,81 @@
 <body>
     <p align="center">
         <font face="Arial" size="5" color="#000080">
-        Benvenuti nella Galleria d'Arte G.F.L</font></p>
+        Benvenuti nel sito di G.F.L</font>
+    </p>
     <p align="center">
         <font face="Arial" size="5" color="#8A0035">
-        Paesaggi e Ritratti</font></p>
+        Paesaggi e Ritratti</font>
+    </p>
     <p align="center">
-        <b><font face="Ink Free" color="#800000" size="6">Arte dal Vivo</font></b></p>
+        <b><font face="Ink Free" color="#800000" size="6">Artedalvivo</font></b>
+    </p>
     <p align="center">
-        <font face="Arial" size="4" color="#C9620E">Tel/WhatsApp: +39 380 389 9860</font></p>
+        <b><font face="Ink Free" size="6" color="#800000">L'Artista in diretta</font></b>
+    </p>
+    <p align="center">
+        <font face="Arial" size="5" color="#C9620E">Diretta streaming dallo studio G.F.L</font>
+    </p>
+    <p align="center">
+        <strong>
+            <font face="Arial" size="4" color="#C9620E">
+                L'artista dipinge in diretta dal suo studio, puoi seguire dal vivo la creazione delle sue opere, e realizzare la tua collezione a prezzi accessibili!
+            </font>
+        </strong>
+    </p>
 
-    <p align="center">&nbsp;</p>
-
-    <p align="center">
-        <img border="0" src="dipinti giulio/1.jpg" width="800" height="600" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;"><p align="center">
-        <font face="Arial">Acquerello su carta - 140 €</font></p>
-    <p align="center">&nbsp;</p>
-
-    <p align="center">
-        <img border="0" src="dipinti giulio/2.jpg" width="700" height="700" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;"><p align="center">
-        <font face="Arial">Acquerello su carta - 140 €</font></p>
-    <p align="center">&nbsp;</p>
-
-    <p align="center">
-        <img border="0" src="dipinti giulio/3.jpg" width="800" height="630" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;"><p align="center">
-        <font face="Arial">Acquerello su carta - 140 €</font></p>
-    <p align="center">&nbsp;</p>
-
-    <p align="center">
-        <img border="0" src="dipinti giulio/4.jpg" width="700" height="700" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;"><p align="center">
-        <font face="Arial">Acquerello su carta - 140 €</font></p>
-    <p align="center">&nbsp;</p>
-
-    <p align="center">
-        <img border="0" src="dipinti giulio/5.jpg" width="650" height="800" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;"><p align="center">
-        <font face="Arial">Acquerello su carta - 140 €</font></p>
-    <p align="center">&nbsp;</p>
-
-    <p align="center">
-        <img border="0" src="dipinti giulio/6.jpg" width="650" height="800" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;"><p align="center">
-        <font face="Arial">Acquerello su carta - 140 €</font></p>
-    <p align="center">&nbsp;</p>
+    <!-- Webcam Container -->
+    <div class="webcam-container" style="max-width: 800px; margin: 20px auto; border: 2px solid #003366; background: #fff;">
+        <div style="background: #003366; color: white; padding: 5px 10px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #4488ff; font-weight: bold; font-size: 24px;">Skyline<span style="color: #ff9933">webcams</span></span>
+            <span style="background: #ff0000; color: white; padding: 2px 8px; border-radius: 3px; font-weight: bold;">LIVE</span>
+        </div>
+        <div id="webcam-image">
+            <img src="dipinti giulio/1.jpg" style="width: 100%; height: auto;">
+        </div>
+        <div style="background: #003366; color: white; padding: 5px 10px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <span id="hit-counter">0</span> hits - <span id="online-viewers">1</span> on-line
+            </div>
+            <button onclick="applyChanges()" style="background: #4CAF50; color: white; border: none; padding: 5px 15px; border-radius: 3px; cursor: pointer;">Apply</button>
+        </div>
+    </div>
 
     <p align="center">
-        <font face="Arial" size="5" color="#800000">
-        Modalità di Pagamento</font></p>
-    <p align="center">
-        <font face="Arial" size="4">
-        • Bonifico Bancario<br>
-        • Carta di Credito</font></p>
+        <font face="Arial" size="4" color="#C9620E">Live Webcam</font>
+    </p>
+
+    <!-- Gallery Images -->
+    <div class="gallery-container">
+        <h1 style="text-align: center; color: #000080;">Galleria d'Arte G.F.L</h1>
+        <div class="gallery-grid">
+            <!-- Add your gallery images here -->
+            <div class="gallery-item">
+                <img class="gallery-image" src="dipinti giulio/1.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
+                <p class="image-caption">Acquerello su carta - 140 €</p>
+            </div>
+            <div class="gallery-item">
+                <img class="gallery-image" src="dipinti giulio/2.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
+                <p class="image-caption">Acquerello su carta - 140 €</p>
+            </div>
+            <div class="gallery-item">
+                <img class="gallery-image" src="dipinti giulio/3.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
+                <p class="image-caption">Acquerello su carta - 140 €</p>
+            </div>
+            <div class="gallery-item">
+                <img class="gallery-image" src="dipinti giulio/4.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
+                <p class="image-caption">Acquerello su carta - 140 €</p>
+            </div>
+            <div class="gallery-item">
+                <img class="gallery-image" src="dipinti giulio/5.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
+                <p class="image-caption">Acquerello su carta - 140 €</p>
+            </div>
+            <div class="gallery-item">
+                <img class="gallery-image" src="dipinti giulio/6.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
+                <p class="image-caption">Acquerello su carta - 140 €</p>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal for image zoom -->
     <div id="imageModal" class="modal">
@@ -355,7 +337,62 @@
         </div>
     </div>
 
+    <!-- Contact and Payment Information -->
+    <p align="center" style="margin-top: 40px;">
+        <font face="Arial" size="5" color="#000080">
+            Contatti e Pagamenti
+        </font>
+    </p>
+    <p align="center">
+        <font face="Arial" size="4">
+            WhatsApp/Tel: +39 380 389 9860
+        </font>
+    </p>
+    <p align="center">
+        <font face="Arial" size="4">
+            Metodi di Pagamento:
+            <br>
+            - Carta di Credito
+            <br>
+            - Bonifico Bancario
+        </font>
+    </p>
+
+    <div align="center">
+        <pre style="color: rgb(0, 0, 0); background-color: rgb(255, 204, 0);">
+            <font color="#111111" size="4">
+                <span style="font-family: arial, helvetica, sans-serif;">
+                    <a target="_blank" href="/policy.htm">Cookie Policy</a>
+                </span>
+            </font>
+        </pre>
+    </div>
+
     <script>
+        // Initialize hit counter from localStorage or start at 0
+        let hits = parseInt(localStorage.getItem('webcamHits')) || 0;
+        hits++;
+        localStorage.setItem('webcamHits', hits);
+        document.getElementById('hit-counter').textContent = hits;
+
+        // Set random number of online viewers (1-20)
+        function updateViewers() {
+            const viewers = Math.floor(Math.random() * 20) + 1;
+            document.getElementById('online-viewers').textContent = viewers;
+        }
+        
+        // Update viewers count every 30 seconds
+        updateViewers();
+        setInterval(updateViewers, 30000);
+
+        // Apply button function
+        function applyChanges() {
+            hits++;
+            localStorage.setItem('webcamHits', hits);
+            document.getElementById('hit-counter').textContent = hits;
+            updateViewers();
+        }
+
         function openModal(img) {
             var modal = document.getElementById("imageModal");
             var modalImg = document.getElementById("modalImage");
@@ -367,9 +404,5 @@
             document.getElementById("imageModal").style.display = "none";
         }
     </script>
-
-    <div align="center">
-        <pre style="color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 204, 0);"><font color="#111111" size="4"><span style="font-family: arial, helvetica, sans-serif;"><a target="_blank" href="/policy.htm">Cookie Policy</a></span></font></pre>
-    </div>
 </body>
 </html>
