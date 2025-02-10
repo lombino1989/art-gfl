@@ -1,22 +1,19 @@
 <!doctype html>
-<html lang="it">
+<html class="no-js" lang="it">
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="it">
+    <meta charset="utf-8" />
+    <title>Arte dal Vivo - Galleria d'Arte G.F.L - Paesaggi e Ritratti</title>
+    <meta name="description" content="Galleria d'Arte G.F.L - Paesaggi e Ritratti - Arte dal Vivo"/>
+    <meta name="copyright" content="Copyright 2024"/>
+    <meta name="geo.region" content="it"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Studio d'Arte G.F.L - Galleria Online</title>
-    <meta name="description" content="Galleria d'arte online con opere originali dell'artista. Quadri e dipinti disponibili per l'acquisto.">
-    
-    <!-- Stili CSS -->
     <style>
-        body {
-            background: #ffffff;
-            color: #000080;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
-
+        body { font-family: Arial, sans-serif; }
+        .painting-container { text-align: center; margin: 20px 0; }
+        .painting-image { max-width: 350px; height: auto; }
+        .price-info { font-size: 18px; color: #800000; margin: 10px 0; }
+        .payment-info { background-color: #f5f5f5; padding: 20px; margin: 20px auto; max-width: 600px; }
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -252,109 +249,127 @@
         #currentViewers, #totalViews {
             font-weight: bold;
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .payment-info {
+            color: #800000;
+            font-family: Arial;
+            font-size: 18px;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .close {
+            position: absolute;
+            right: 35px;
+            top: 15px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1 class="title">Studio D'arte G.F.L</h1>
-            <h2 class="subtitle">Paesaggi e Ritratti</h2>
-        </header>
+    <p align="center">
+        <font face="Arial" size="5" color="#000080">
+        Benvenuti nella Galleria d'Arte G.F.L</font></p>
+    <p align="center">
+        <font face="Arial" size="5" color="#8A0035">
+        Paesaggi e Ritratti</font></p>
+    <p align="center">
+        <b><font face="Ink Free" color="#800000" size="6">Arte dal Vivo</font></b></p>
+    <p align="center">
+        <font face="Arial" size="4" color="#C9620E">Tel/WhatsApp: +39 380 389 9860</font></p>
 
-        <section class="gallery">
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="dipinti giulio/1.jpg" alt="Dipinto 1" class="gallery-image">
-                    <p class="image-caption">Opera #1</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="dipinti giulio/2.jpg" alt="Dipinto 2" class="gallery-image">
-                    <p class="image-caption">Opera #2</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="dipinti giulio/3.jpg" alt="Dipinto 3" class="gallery-image">
-                    <p class="image-caption">Opera #3</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="dipinti giulio/4.jpg" alt="Dipinto 4" class="gallery-image">
-                    <p class="image-caption">Opera #4</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="dipinti giulio/5.jpg" alt="Dipinto 5" class="gallery-image">
-                    <p class="image-caption">Opera #5</p>
-                </div>
-                </section>
+    <p align="center">&nbsp;</p>
 
-        <section class="contact">
-            <h2>Contatti</h2>
-            <p>Per informazioni e acquisti:</p>
-            <p>WhatsApp: <a href="https://wa.me/393803899860" target="_blank">+39 380 389 9860</a></p>
-        </section>
+    <p align="center">
+        <img border="0" src="dipinti giulio/1.jpg" width="800" height="600" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;"><p align="center">
+        <font face="Arial">Acquerello su carta - 140 €</font></p>
+    <p align="center">&nbsp;</p>
+
+    <p align="center">
+        <img border="0" src="dipinti giulio/2.jpg" width="700" height="700" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;"><p align="center">
+        <font face="Arial">Acquerello su carta - 140 €</font></p>
+    <p align="center">&nbsp;</p>
+
+    <p align="center">
+        <img border="0" src="dipinti giulio/3.jpg" width="800" height="630" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;"><p align="center">
+        <font face="Arial">Acquerello su carta - 140 €</font></p>
+    <p align="center">&nbsp;</p>
+
+    <p align="center">
+        <img border="0" src="dipinti giulio/4.jpg" width="700" height="700" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;"><p align="center">
+        <font face="Arial">Acquerello su carta - 140 €</font></p>
+    <p align="center">&nbsp;</p>
+
+    <p align="center">
+        <img border="0" src="dipinti giulio/5.jpg" width="650" height="800" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;"><p align="center">
+        <font face="Arial">Acquerello su carta - 140 €</font></p>
+    <p align="center">&nbsp;</p>
+
+    <p align="center">
+        <img border="0" src="dipinti giulio/6.jpg" width="650" height="800" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;"><p align="center">
+        <font face="Arial">Acquerello su carta - 140 €</font></p>
+    <p align="center">&nbsp;</p>
+
+    <p align="center">
+        <font face="Arial" size="5" color="#800000">
+        Modalità di Pagamento</font></p>
+    <p align="center">
+        <font face="Arial" size="4">
+        • Bonifico Bancario<br>
+        • Carta di Credito</font></p>
+
+    <!-- Modal for image zoom -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div class="payment-info">
+            <p>Prezzo: 140 €</p>
+            <p>Acquerello su carta</p>
+            <p>Modalità di pagamento:<br>
+            • Bonifico Bancario<br>
+            • Carta di Credito</p>
+            <p>Per acquistare contattaci:<br>
+            Tel/WhatsApp: +39 380 389 9860</p>
+        </div>
     </div>
 
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox">
-        <span class="close-lightbox">&times;</span>
-        <img id="lightbox-img" src="" alt="Immagine ingrandita">
-    </div>
-
-    <!-- Script per il lightbox -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const images = document.querySelectorAll('.gallery-image');
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const closeLightbox = document.querySelector('.close-lightbox');
-
-            images.forEach(image => {
-                image.addEventListener('click', () => {
-                    lightbox.style.display = 'block';
-                    lightboxImg.src = image.src;
-                });
-            });
-
-            lightbox.addEventListener('click', (e) => {
-                if (e.target !== lightboxImg) {
-                    lightbox.style.display = 'none';
-                }
-            });
-
-            closeLightbox.addEventListener('click', () => {
-                lightbox.style.display = 'none';
-            });
-        });
-    </script>
-
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-    <!-- Script to update viewers randomly -->
-    <script>
-        function updateViewers() {
-            const currentViewersElement = document.getElementById('currentViewers');
-            const totalViewsElement = document.getElementById('totalViews');
-            
-            // Get saved total views from localStorage or start from 0
-            let totalViews = parseInt(localStorage.getItem('totalViews')) || 0;
-            totalViewsElement.textContent = totalViews;
-            
-            setInterval(() => {
-                // Random number between 0 and 15 viewers
-                const newViewers = Math.floor(Math.random() * 16);
-                currentViewersElement.textContent = newViewers;
-                
-                // Increment total views occasionally
-                if (Math.random() > 0.7) { // 30% chance to increment
-                    totalViews++;
-                    totalViewsElement.textContent = totalViews;
-                    // Save to localStorage
-                    localStorage.setItem('totalViews', totalViews.toString());
-                }
-            }, 3000); // Update every 3 seconds
+        function openModal(img) {
+            var modal = document.getElementById("imageModal");
+            var modalImg = document.getElementById("modalImage");
+            modal.style.display = "block";
+            modalImg.src = img.src;
         }
 
-        // Start updating viewers when page loads
-        document.addEventListener('DOMContentLoaded', updateViewers);
+        function closeModal() {
+            document.getElementById("imageModal").style.display = "none";
+        }
     </script>
+
+    <div align="center">
+        <pre style="color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 204, 0);"><font color="#111111" size="4"><span style="font-family: arial, helvetica, sans-serif;"><a target="_blank" href="/policy.htm">Cookie Policy</a></span></font></pre>
+    </div>
 </body>
 </html>
