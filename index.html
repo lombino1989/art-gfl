@@ -13,6 +13,25 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-image: url('dipinti giulio/1.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            z-index: -1;
+        }
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
         }
 
         /* Webcam Container Styles */
@@ -244,165 +263,167 @@
     </style>
 </head>
 <body>
-    <p align="center">
-        <font face="Arial" size="5" color="#000080">
-        Benvenuti nel sito di G.F.L</font>
-    </p>
-    <p align="center">
-        <font face="Arial" size="5" color="#8A0035">
-        Paesaggi e Ritratti</font>
-    </p>
-    <p align="center">
-        <b><font face="Ink Free" color="#800000" size="6">Artedalvivo</font></b>
-    </p>
-    <p align="center">
-        <b><font face="Ink Free" size="6" color="#800000">L'Artista in diretta</font></b>
-    </p>
-    <p align="center">
-        <font face="Arial" size="5" color="#C9620E">Diretta streaming dallo studio G.F.L</font>
-    </p>
-    <p align="center">
-        <strong>
-            <font face="Arial" size="4" color="#C9620E">
-                L'artista dipinge in diretta dal suo studio, puoi seguire dal vivo la creazione delle sue opere, e realizzare la tua collezione a prezzi accessibili!
+    <div class="content-wrapper">
+        <p align="center">
+            <font face="Arial" size="5" color="#000080">
+            Benvenuti nel sito di G.F.L</font>
+        </p>
+        <p align="center">
+            <font face="Arial" size="5" color="#8A0035">
+            Paesaggi e Ritratti</font>
+        </p>
+        <p align="center">
+            <b><font face="Ink Free" color="#800000" size="6">Artedalvivo</font></b>
+        </p>
+        <p align="center">
+            <b><font face="Ink Free" size="6" color="#800000">L'Artista in diretta</font></b>
+        </p>
+        <p align="center">
+            <font face="Arial" size="5" color="#C9620E">Diretta streaming dallo studio G.F.L</font>
+        </p>
+        <p align="center">
+            <strong>
+                <font face="Arial" size="4" color="#C9620E">
+                    L'artista dipinge in diretta dal suo studio, puoi seguire dal vivo la creazione delle sue opere, e realizzare la tua collezione a prezzi accessibili!
+                </font>
+            </strong>
+        </p>
+
+        <!-- Webcam Container -->
+        <div class="webcam-container" style="max-width: 800px; margin: 20px auto; border: 2px solid #003366; background: #fff;">
+            <div style="background: #003366; color: white; padding: 5px 10px; display: flex; justify-content: space-between; align-items: center;">
+                <span style="color: #4488ff; font-weight: bold; font-size: 24px;">Skyline<span style="color: #ff9933">webcams</span></span>
+                <span style="background: #ff0000; color: white; padding: 2px 8px; border-radius: 3px; font-weight: bold;">LIVE</span>
+            </div>
+            <div id="webcam-image">
+                <img src="dipinti giulio/1.jpg" style="width: 100%; height: auto;">
+            </div>
+            <div style="background: #003366; color: white; padding: 5px 10px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <span id="hit-counter">0</span> hits - <span id="online-viewers">1</span> on-line
+                </div>
+                <button onclick="applyChanges()" style="background: #4CAF50; color: white; border: none; padding: 5px 15px; border-radius: 3px; cursor: pointer;">Apply</button>
+            </div>
+        </div>
+
+        <p align="center">
+            <font face="Arial" size="4" color="#C9620E">Live Webcam</font>
+        </p>
+
+        <!-- Gallery Images -->
+        <div class="gallery-container">
+            <h1 style="text-align: center; color: #000080;">Galleria d'Arte G.F.L</h1>
+            <div class="gallery-grid">
+                <!-- Add your gallery images here -->
+                <div class="gallery-item">
+                    <img class="gallery-image" src="dipinti giulio/1.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
+                    <p class="image-caption">Acquerello su carta - 140 €</p>
+                </div>
+                <div class="gallery-item">
+                    <img class="gallery-image" src="dipinti giulio/2.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
+                    <p class="image-caption">Acquerello su carta - 140 €</p>
+                </div>
+                <div class="gallery-item">
+                    <img class="gallery-image" src="dipinti giulio/3.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
+                    <p class="image-caption">Acquerello su carta - 140 €</p>
+                </div>
+                <div class="gallery-item">
+                    <img class="gallery-image" src="dipinti giulio/4.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
+                    <p class="image-caption">Acquerello su carta - 140 €</p>
+                </div>
+                <div class="gallery-item">
+                    <img class="gallery-image" src="dipinti giulio/5.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
+                    <p class="image-caption">Acquerello su carta - 140 €</p>
+                </div>
+                <div class="gallery-item">
+                    <img class="gallery-image" src="dipinti giulio/6.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
+                    <p class="image-caption">Acquerello su carta - 140 €</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for image zoom -->
+        <div id="imageModal" class="modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img class="modal-content" id="modalImage">
+            <div class="payment-info">
+                <p>Prezzo: 140 €</p>
+                <p>Acquerello su carta</p>
+                <p>Modalità di pagamento:<br>
+                • Bonifico Bancario<br>
+                • Carta di Credito</p>
+                <p>Per acquistare contattaci:<br>
+                Tel/WhatsApp: +39 380 389 9860</p>
+            </div>
+        </div>
+
+        <!-- Contact and Payment Information -->
+        <p align="center" style="margin-top: 40px;">
+            <font face="Arial" size="5" color="#000080">
+                Contatti e Pagamenti
             </font>
-        </strong>
-    </p>
-
-    <!-- Webcam Container -->
-    <div class="webcam-container" style="max-width: 800px; margin: 20px auto; border: 2px solid #003366; background: #fff;">
-        <div style="background: #003366; color: white; padding: 5px 10px; display: flex; justify-content: space-between; align-items: center;">
-            <span style="color: #4488ff; font-weight: bold; font-size: 24px;">Skyline<span style="color: #ff9933">webcams</span></span>
-            <span style="background: #ff0000; color: white; padding: 2px 8px; border-radius: 3px; font-weight: bold;">LIVE</span>
-        </div>
-        <div id="webcam-image">
-            <img src="dipinti giulio/1.jpg" style="width: 100%; height: auto;">
-        </div>
-        <div style="background: #003366; color: white; padding: 5px 10px; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <span id="hit-counter">0</span> hits - <span id="online-viewers">1</span> on-line
-            </div>
-            <button onclick="applyChanges()" style="background: #4CAF50; color: white; border: none; padding: 5px 15px; border-radius: 3px; cursor: pointer;">Apply</button>
-        </div>
-    </div>
-
-    <p align="center">
-        <font face="Arial" size="4" color="#C9620E">Live Webcam</font>
-    </p>
-
-    <!-- Gallery Images -->
-    <div class="gallery-container">
-        <h1 style="text-align: center; color: #000080;">Galleria d'Arte G.F.L</h1>
-        <div class="gallery-grid">
-            <!-- Add your gallery images here -->
-            <div class="gallery-item">
-                <img class="gallery-image" src="dipinti giulio/1.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
-                <p class="image-caption">Acquerello su carta - 140 €</p>
-            </div>
-            <div class="gallery-item">
-                <img class="gallery-image" src="dipinti giulio/2.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
-                <p class="image-caption">Acquerello su carta - 140 €</p>
-            </div>
-            <div class="gallery-item">
-                <img class="gallery-image" src="dipinti giulio/3.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
-                <p class="image-caption">Acquerello su carta - 140 €</p>
-            </div>
-            <div class="gallery-item">
-                <img class="gallery-image" src="dipinti giulio/4.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
-                <p class="image-caption">Acquerello su carta - 140 €</p>
-            </div>
-            <div class="gallery-item">
-                <img class="gallery-image" src="dipinti giulio/5.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
-                <p class="image-caption">Acquerello su carta - 140 €</p>
-            </div>
-            <div class="gallery-item">
-                <img class="gallery-image" src="dipinti giulio/6.jpg" onclick="openModal(this)" style="cursor: pointer; max-width: 100%; height: auto;">
-                <p class="image-caption">Acquerello su carta - 140 €</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal for image zoom -->
-    <div id="imageModal" class="modal">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <img class="modal-content" id="modalImage">
-        <div class="payment-info">
-            <p>Prezzo: 140 €</p>
-            <p>Acquerello su carta</p>
-            <p>Modalità di pagamento:<br>
-            • Bonifico Bancario<br>
-            • Carta di Credito</p>
-            <p>Per acquistare contattaci:<br>
-            Tel/WhatsApp: +39 380 389 9860</p>
-        </div>
-    </div>
-
-    <!-- Contact and Payment Information -->
-    <p align="center" style="margin-top: 40px;">
-        <font face="Arial" size="5" color="#000080">
-            Contatti e Pagamenti
-        </font>
-    </p>
-    <p align="center">
-        <font face="Arial" size="4">
-            WhatsApp/Tel: +39 380 389 9860
-        </font>
-    </p>
-    <p align="center">
-        <font face="Arial" size="4">
-            Metodi di Pagamento:
-            <br>
-            - Carta di Credito
-            <br>
-            - Bonifico Bancario
-        </font>
-    </p>
-
-    <div align="center">
-        <pre style="color: rgb(0, 0, 0); background-color: rgb(255, 204, 0);">
-            <font color="#111111" size="4">
-                <span style="font-family: arial, helvetica, sans-serif;">
-                    <a target="_blank" href="/policy.htm">Cookie Policy</a>
-                </span>
+        </p>
+        <p align="center">
+            <font face="Arial" size="4">
+                WhatsApp/Tel: +39 380 389 9860
             </font>
-        </pre>
-    </div>
+        </p>
+        <p align="center">
+            <font face="Arial" size="4">
+                Metodi di Pagamento:
+                <br>
+                - Carta di Credito
+                <br>
+                - Bonifico Bancario
+            </font>
+        </p>
 
-    <script>
-        // Initialize hit counter from localStorage or start at 0
-        let hits = parseInt(localStorage.getItem('webcamHits')) || 0;
-        hits++;
-        localStorage.setItem('webcamHits', hits);
-        document.getElementById('hit-counter').textContent = hits;
+        <div align="center">
+            <pre style="color: rgb(0, 0, 0); background-color: rgb(255, 204, 0);">
+                <font color="#111111" size="4">
+                    <span style="font-family: arial, helvetica, sans-serif;">
+                        <a target="_blank" href="/policy.htm">Cookie Policy</a>
+                    </span>
+                </font>
+            </pre>
+        </div>
 
-        // Set random number of online viewers (1-20)
-        function updateViewers() {
-            const viewers = Math.floor(Math.random() * 20) + 1;
-            document.getElementById('online-viewers').textContent = viewers;
-        }
-        
-        // Update viewers count every 30 seconds
-        updateViewers();
-        setInterval(updateViewers, 30000);
-
-        // Apply button function
-        function applyChanges() {
+        <script>
+            // Initialize hit counter from localStorage or start at 0
+            let hits = parseInt(localStorage.getItem('webcamHits')) || 0;
             hits++;
             localStorage.setItem('webcamHits', hits);
             document.getElementById('hit-counter').textContent = hits;
+
+            // Set random number of online viewers (1-20)
+            function updateViewers() {
+                const viewers = Math.floor(Math.random() * 20) + 1;
+                document.getElementById('online-viewers').textContent = viewers;
+            }
+            
+            // Update viewers count every 30 seconds
             updateViewers();
-        }
+            setInterval(updateViewers, 30000);
 
-        function openModal(img) {
-            var modal = document.getElementById("imageModal");
-            var modalImg = document.getElementById("modalImage");
-            modal.style.display = "block";
-            modalImg.src = img.src;
-        }
+            // Apply button function
+            function applyChanges() {
+                hits++;
+                localStorage.setItem('webcamHits', hits);
+                document.getElementById('hit-counter').textContent = hits;
+                updateViewers();
+            }
 
-        function closeModal() {
-            document.getElementById("imageModal").style.display = "none";
-        }
-    </script>
+            function openModal(img) {
+                var modal = document.getElementById("imageModal");
+                var modalImg = document.getElementById("modalImage");
+                modal.style.display = "block";
+                modalImg.src = img.src;
+            }
+
+            function closeModal() {
+                document.getElementById("imageModal").style.display = "none";
+            }
+        </script>
+    </div>
 </body>
 </html>
