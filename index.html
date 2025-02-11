@@ -370,7 +370,15 @@
                     id="webcam-frame"
                     allow="autoplay; fullscreen"
                     allowfullscreen
+                    onerror="handleWebcamError()"
+                    style="display: none;"
                 ></iframe>
+                <img 
+                    src="dipinti giulio/1.jpg" 
+                    id="fallback-image" 
+                    style="width: 100%; height: 100%; object-fit: contain;"
+                    alt="Studio G.F.L"
+                >
             </div>
             <div class="webcam-stats">
                 <div>
@@ -543,6 +551,36 @@
 
             // Refresh webcam every 5 seconds
             setInterval(refreshWebcam, 5000);
+
+            // Webcam error handling
+            function handleWebcamError() {
+                document.getElementById('webcam-frame').style.display = 'none';
+                document.getElementById('fallback-image').style.display = 'block';
+            }
+
+            // Try to load webcam
+            function tryLoadWebcam() {
+                const frame = document.getElementById('webcam-frame');
+                const fallback = document.getElementById('fallback-image');
+                
+                fetch('http://192.168.1.17:8888/update.html', {
+                    mode: 'no-cors',
+                    cache: 'no-cache'
+                })
+                .then(() => {
+                    frame.style.display = 'block';
+                    fallback.style.display = 'none';
+                })
+                .catch(() => {
+                    handleWebcamError();
+                });
+            }
+
+            // Try to load webcam on page load
+            window.addEventListener('load', tryLoadWebcam);
+
+            // Retry every 30 seconds
+            setInterval(tryLoadWebcam, 30000);
 
             // Modal functions
             function openModal(img) {
