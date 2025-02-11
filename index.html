@@ -275,12 +275,14 @@
             overflow: hidden;
         }
 
-        #webcam-frame {
+        .video-js {
             width: 100%;
             height: 100%;
-            border: none;
             background: #ffffff;
-            display: block;
+        }
+
+        .vjs-poster {
+            background-size: cover;
         }
 
         /* Add zoom controls */
@@ -328,6 +330,8 @@
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
 </head>
 <body>
     <div class="content-wrapper">
@@ -365,13 +369,24 @@
             </div>
             <div id="webcam-image">
                 <iframe 
-                    src="https://myearthcam.com/artegfl12345/embed"
+                    src="http://95.246.173.233:8888/update.html"
                     id="webcam-frame"
-                    allow="autoplay; fullscreen; camera"
-                    allowfullscreen
-                    style="width: 100%; height: 100%; border: none; background: #ffffff;"
+                    frameborder="0"
+                    style="width: 100%; height: 100%; border: none; background: #000000; overflow: hidden;"
                     scrolling="no"
                 ></iframe>
+                <img 
+                    src="dipinti giulio/1.jpg" 
+                    id="fallback-image" 
+                    style="display: none; width: 100%; height: 100%; object-fit: contain;"
+                    alt="Fallback Image"
+                >
+                <style>
+                    #webcam-frame {
+                        margin: -50px 0 0 0;
+                        transform: scale(1.1);
+                    }
+                </style>
             </div>
             <div class="webcam-stats">
                 <div>
@@ -542,8 +557,8 @@
                 frame.src = frame.src;
             }
 
-            // Refresh webcam every 5 seconds
-            setInterval(refreshWebcam, 5000);
+            // Refresh webcam every 10 seconds
+            setInterval(refreshWebcam, 10000);
 
             // Webcam error handling
             function handleWebcamError() {
@@ -586,6 +601,54 @@
             function closeModal() {
                 document.getElementById('imageModal').style.display = "none";
             }
+
+            function startStreamCheck() {
+                // Controlla lo stream ogni 5 secondi
+                setInterval(checkStream, 5000);
+            }
+
+            function checkStream() {
+                var frame = document.getElementById('webcam-frame');
+                var fallback = document.getElementById('fallback-image');
+                
+                // Prova a ricaricare il frame
+                frame.src = frame.src;
+                
+                // Controlla se il frame è vuoto o bianco
+                setTimeout(function() {
+                    try {
+                        var frameDoc = frame.contentDocument || frame.contentWindow.document;
+                        if (!frameDoc || frameDoc.body.innerHTML === '') {
+                            // Se il frame è vuoto, mostra l'immagine di fallback
+                            frame.style.display = 'none';
+                            fallback.style.display = 'block';
+                            // Riprova a caricare dopo 10 secondi
+                            setTimeout(function() {
+                                frame.style.display = 'block';
+                                fallback.style.display = 'none';
+                            }, 10000);
+                        }
+                    } catch(e) {
+                        console.log('Ricarico il frame...');
+                        frame.src = frame.src;
+                    }
+                }, 1000);
+            }
+        </script>
+        <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+        <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+        <script>
+            // Initialize video player
+            var player = videojs('webcam-player', {
+                fluid: true,
+                autoplay: true,
+                controls: true,
+                sources: [{
+                    src: 'https://video1.earthcam.com/myearthcam/af1211d2079dcadd16a88a9a0feded07.flv/playlist.m3u8',
+                    type: 'application/x-mpegURL'
+                }]
+            });
         </script>
     </div>
 </body>
