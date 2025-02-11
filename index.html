@@ -9,16 +9,23 @@
     <meta name="geo.region" content="it"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        :root {
+            --primary-color: #1a1f3c;
+            --accent-color: #ff6b6b;
+            --text-color: #ffffff;
+            --light-bg: #2a3052;
+            --header-font: 'Playfair Display', serif;
+        }
+        
         body { 
-            font-family: Arial, sans-serif;
+            font-family: 'Lato', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('dipinti giulio/7.jpg');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            position: relative;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            line-height: 1.6;
         }
+
         body::before {
             content: '';
             position: fixed;
@@ -26,135 +33,277 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(26, 31, 60, 0.97);
             z-index: -1;
         }
+
         .content-wrapper {
             position: relative;
             z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
         }
+
         .webcam-container {
             position: relative;
-            max-width: 800px;
-            margin: 20px auto;
-            border: 2px solid #003366;
-            background: #fff;
+            max-width: 1000px;
+            margin: 40px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            background: var(--light-bg);
         }
+
         .webcam-header {
-            background: #003366;
+            background: linear-gradient(135deg, #2a3052, #1a1f3c);
             color: white;
-            padding: 5px 10px;
+            padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         .webcam-logo {
-            color: #4488ff;
-            font-weight: bold;
-            font-size: 24px;
+            font-family: var(--header-font);
+            font-size: 1.5rem;
+            letter-spacing: 1px;
         }
-        .webcam-stats {
-            background: #003366;
-            color: white;
-            padding: 5px 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+
         .live-indicator {
-            background: #ff0000;
+            background: var(--accent-color);
             color: white;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: pulse 2s infinite;
         }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .webcam-stats {
+            background: var(--light-bg);
+            color: white;
+            padding: 1rem 1.5rem;
+            font-size: 0.9rem;
+        }
+
         .apply-button {
-            background: #4CAF50;
+            background: var(--accent-color);
             color: white;
             border: none;
-            padding: 5px 15px;
-            border-radius: 3px;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
             cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
         }
+
         .apply-button:hover {
-            background: #45a049;
+            background: #c0392b;
+            transform: translateY(-2px);
         }
+
         .gallery-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            max-width: 1400px;
+            margin: 4rem auto;
         }
+
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
         }
+
         .gallery-item {
             text-align: center;
-            margin-bottom: 40px;
+            transition: transform 0.3s ease;
         }
+
         .gallery-image {
-            max-width: 100%;
-            height: auto;
-            margin: 10px 0;
-            border: none;
-            transition: transform 0.2s ease;
-            cursor: pointer;
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
         }
-        .gallery-image:hover {
-            transform: scale(1.02);
+
+        .gallery-item:hover .gallery-image {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
         }
+
+        .image-caption {
+            margin-top: 1rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
         .modal {
             display: none;
             position: fixed;
             z-index: 1000;
-            padding-top: 50px;
+            padding: 2rem;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(5px);
         }
+
         .modal-content {
             margin: auto;
             display: block;
             max-width: 90%;
-            max-height: 80vh;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
+
         .close {
             position: absolute;
-            right: 35px;
-            top: 15px;
-            color: #f1f1f1;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
+            right: 2rem;
+            top: 1rem;
+            color: white;
+            font-size: 2.5rem;
+            transition: color 0.2s;
+        }
+
+        .close:hover {
+            color: var(--accent-color);
+        }
+
+        /* Add new styles for highlighted text */
+        .highlight-text {
+            color: #ffd700 !important; /* Bright gold color */
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3),
+                        0 0 20px rgba(255, 215, 0, 0.2),
+                        0 0 30px rgba(255, 215, 0, 0.1);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.3),
+                             0 0 20px rgba(255, 215, 0, 0.2),
+                             0 0 30px rgba(255, 215, 0, 0.1); }
+            50% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5),
+                              0 0 30px rgba(255, 215, 0, 0.3),
+                              0 0 40px rgba(255, 215, 0, 0.2); }
+            100% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.3),
+                               0 0 20px rgba(255, 215, 0, 0.2),
+                               0 0 30px rgba(255, 215, 0, 0.1); }
+        }
+
+        /* Typography Styles - Updated for cursive style */
+        p[align="center"] font[size="5"][color="#000080"],
+        p[align="center"] font[size="5"][color="#8A0035"],
+        p[align="center"] font[face="Arial"],
+        p[align="center"] font[color="#C9620E"],
+        p[align="center"] strong font[face="Arial"] {
+            font-family: 'Dancing Script', cursive;
+            letter-spacing: 1px;
+            margin: 1.5rem 0;
+            font-size: 2.2rem !important;
+            color: var(--text-color) !important;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        p[align="center"] font[face="Ink Free"] {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem !important;
+            margin: 1rem 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Contact Section - Updated for cursive style */
+        p[align="center"][style="margin-top: 40px;"] {
+            background: var(--light-bg);
+            padding: 3rem;
+            border-radius: 12px;
+            margin: 4rem auto;
+            max-width: 800px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+
+        p[align="center"][style="margin-top: 40px;"] font,
+        p[align="center"] font[size="4"] {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem !important;
+        }
+
+        /* Add signature style */
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: var(--accent-color);
+            text-align: center;
+            margin: 2rem auto;
+            transform: rotate(-5deg);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .signature::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 2px;
+            background: var(--accent-color);
+            margin: 0.5rem auto;
+            transform: rotate(5deg);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+                padding: 1rem;
+            }
+
+            .webcam-container {
+                margin: 20px 10px;
+            }
+
+            .content-wrapper {
+                padding: 1rem;
+            }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="content-wrapper">
         <p align="center">
             <font face="Arial" size="5" color="#000080">
-            Benvenuti nel sito di G.F.L</font>
+            Benvenuti nel sito di</font>
         </p>
+        <div class="signature">G.F.L</div>
         <p align="center">
             <font face="Arial" size="5" color="#8A0035">
             Paesaggi e Ritratti</font>
         </p>
         <p align="center">
-            <b><font face="Ink Free" color="#800000" size="6">Artedalvivo</font></b>
+            <b><font face="Ink Free" color="#ffd700" size="6" class="highlight-text">Artedalvivo</font></b>
         </p>
         <p align="center">
-            <b><font face="Ink Free" size="6" color="#800000">L'Artista in diretta</font></b>
+            <b><font face="Ink Free" size="6" color="#ffd700" class="highlight-text">L'Artista in diretta</font></b>
         </p>
         <p align="center">
-            <font face="Arial" size="5" color="#C9620E">Diretta streaming dallo studio G.F.L</font>
+            <font face="Arial" size="5" color="#ffd700" class="highlight-text">Diretta streaming dallo studio G.F.L</font>
         </p>
         <p align="center">
             <strong>
-                <font face="Arial" size="4" color="#C9620E">
+                <font face="Arial" size="4" color="#ffd700" class="highlight-text">
                     L'artista dipinge in diretta dal suo studio, puoi seguire dal vivo la creazione delle sue opere, e realizzare la tua collezione a prezzi accessibili!
                 </font>
             </strong>
@@ -254,27 +403,81 @@
         </div>
 
         <script>
-            // Initialize hit counter
-            let hits = parseInt(localStorage.getItem('webcamHits')) || 0;
-            hits++;
-            localStorage.setItem('webcamHits', hits);
-            document.getElementById('hit-counter').textContent = hits;
-
-            // Update viewers function
-            function updateViewers() {
-                const viewers = Math.floor(Math.random() * 20) + 1;
-                document.getElementById('online-viewers').textContent = viewers;
+            // Initialize hit counter with time-based calculation
+            function calculateTimeBasedHits() {
+                const startDate = new Date('2024-01-01').getTime();
+                const currentDate = new Date().getTime();
+                const hoursElapsed = Math.floor((currentDate - startDate) / (1000 * 60 * 60));
+                return 500 + (hoursElapsed * 100); // Base 500 + 100 per hour since start
             }
+
+            let hits = parseInt(localStorage.getItem('webcamHits')) || calculateTimeBasedHits();
+            let currentViewers = Math.floor(Math.random() * 15) + 5;
+            let targetHits = hits;
+            let displayedHits = hits;
+            let lastUpdateHour = new Date().getHours();
             
-            // Initial update and interval
+            // Function to animate number increase
+            function animateValue(start, end, duration, element) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const current = Math.floor(progress * (end - start) + start);
+                    element.textContent = current.toLocaleString();
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            // Check and update hits based on current time
+            function checkTimeAndUpdateHits() {
+                const currentHour = new Date().getHours();
+                if (currentHour !== lastUpdateHour) {
+                    targetHits += 100; // Add 100 hits every hour
+                    localStorage.setItem('webcamHits', targetHits);
+                    
+                    // Animate the hit counter
+                    const hitCounter = document.getElementById('hit-counter');
+                    animateValue(displayedHits, targetHits, 5000, hitCounter);
+                    displayedHits = targetHits;
+                    lastUpdateHour = currentHour;
+                }
+            }
+
+            // Update viewers with smooth animation
+            function updateViewers() {
+                const previousViewers = currentViewers;
+                currentViewers = Math.floor(Math.random() * 15) + 5;
+                
+                const viewerElement = document.getElementById('online-viewers');
+                animateValue(previousViewers, currentViewers, 2000, viewerElement);
+            }
+
+            // Initial display
+            document.getElementById('hit-counter').textContent = hits.toLocaleString();
+            document.getElementById('online-viewers').textContent = currentViewers;
+
+            // Check time every minute
+            setInterval(checkTimeAndUpdateHits, 60000); // Check every minute for hour change
+            setInterval(updateViewers, 30000); // Update viewers every 30 seconds
+
+            // Initial check
+            checkTimeAndUpdateHits();
             updateViewers();
-            setInterval(updateViewers, 30000);
 
             // Apply button function
             function applyChanges() {
-                hits++;
-                localStorage.setItem('webcamHits', hits);
-                document.getElementById('hit-counter').textContent = hits;
+                const increment = 25;
+                targetHits += increment;
+                localStorage.setItem('webcamHits', targetHits);
+                
+                const hitCounter = document.getElementById('hit-counter');
+                animateValue(displayedHits, targetHits, 2000, hitCounter);
+                displayedHits = targetHits;
+                
                 updateViewers();
             }
 
