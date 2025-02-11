@@ -267,21 +267,20 @@
         #webcam-image {
             width: 100%;
             height: 720px;
-            background: #000;
+            background: #ffffff;
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            position: relative;
         }
 
         #webcam-frame {
             width: 100%;
             height: 100%;
             border: none;
+            background: #ffffff;
             display: block;
-            object-fit: contain;
-            margin: 0 auto;
         }
 
         /* Add zoom controls */
@@ -366,19 +365,13 @@
             </div>
             <div id="webcam-image">
                 <iframe 
-                    src="http://192.168.1.17:8888/update.html" 
+                    src="https://myearthcam.com/artegfl12345/embed"
                     id="webcam-frame"
-                    allow="autoplay; fullscreen"
+                    allow="autoplay; fullscreen; camera"
                     allowfullscreen
-                    onerror="handleWebcamError()"
-                    style="display: none;"
+                    style="width: 100%; height: 100%; border: none; background: #ffffff;"
+                    scrolling="no"
                 ></iframe>
-                <img 
-                    src="dipinti giulio/1.jpg" 
-                    id="fallback-image" 
-                    style="width: 100%; height: 100%; object-fit: contain;"
-                    alt="Studio G.F.L"
-                >
             </div>
             <div class="webcam-stats">
                 <div>
