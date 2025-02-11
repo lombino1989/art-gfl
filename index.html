@@ -364,35 +364,18 @@
         <!-- Webcam Container -->
         <div class="webcam-container">
             <div class="webcam-header">
-                <span class="webcam-logo">Studio<span style="color: #ff9933">G.F.L</span></span>
-                <span class="live-indicator">LIVE</span>
+                <div class="webcam-logo">Webcam Live</div>
+                <div class="live-indicator">LIVE</div>
             </div>
-            <div id="webcam-image">
-                <iframe 
-                    src="http://95.246.173.233:8888/update.html"
-                    id="webcam-frame"
-                    frameborder="0"
-                    style="width: 100%; height: 100%; border: none; background: #000000; overflow: hidden;"
-                    scrolling="no"
-                ></iframe>
-                <img 
-                    src="dipinti giulio/1.jpg" 
-                    id="fallback-image" 
-                    style="display: none; width: 100%; height: 100%; object-fit: contain;"
-                    alt="Fallback Image"
-                >
-                <style>
-                    #webcam-frame {
-                        margin: -50px 0 0 0;
-                        transform: scale(1.1);
-                    }
-                </style>
+            <div class="video-container">
+                <video id="webcam-stream" class="video-js vjs-default-skin" controls preload="auto" width="100%" height="auto">
+                    <source src="http://95.246.173.233:8888/stream" type="application/x-mpegURL">
+                    Il tuo browser non supporta lo streaming video.
+                </video>
             </div>
             <div class="webcam-stats">
-                <div>
-                    <span id="hit-counter">0</span> hits - <span id="online-viewers">1</span> on-line
-                </div>
-                <button class="apply-button" onclick="applyChanges()">Apply</button>
+                <span>Visualizzazioni: <span id="hit-counter">0</span></span>
+                <span style="margin-left: 20px;">Online: <span id="online-viewers">0</span></span>
             </div>
         </div>
 
