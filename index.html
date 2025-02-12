@@ -368,10 +368,7 @@
                 <div class="live-indicator">LIVE</div>
             </div>
             <div class="video-container">
-                <video id="webcam-stream" class="video-js vjs-default-skin" controls preload="auto" width="100%" height="auto">
-                    <source src="http://95.246.173.233:8888/stream" type="application/x-mpegURL">
-                    Il tuo browser non supporta lo streaming video.
-                </video>
+                <img src="dipinti giulio/1.jpg" id="webcam-image" alt="Dipinto Live" style="width: 100%; height: auto; max-height: 720px; object-fit: contain;">
             </div>
             <div class="webcam-stats">
                 <span>Visualizzazioni: <span id="hit-counter">0</span></span>
@@ -524,7 +521,7 @@
             setInterval(checkTimeAndUpdateHits, 60000); // Check every minute for hour change
             setInterval(updateViewers, 30000); // Update viewers every 30 seconds
 
-            // Initial check
+            // Check time every minute
             checkTimeAndUpdateHits();
             updateViewers();
 
