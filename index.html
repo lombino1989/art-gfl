@@ -376,17 +376,6 @@
             </div>
         </div>
 
-        <p align="center">
-            <font face="Arial" size="4" color="#C9620E">Live Webcam</font>
-        </p>
-
-        <p align="center" style="margin-top: 20px;">
-            <font face="Arial" size="4" color="#FFFFFF">
-                Visita la nostra webcam in diretta: 
-                <a href="http://95.246.173.233:8888/update.html" style="color: var(--accent-color);">Clicca qui</a>
-            </font>
-        </p>
-
         <!-- Gallery -->
         <div class="gallery-container">
             <div class="gallery-grid">
@@ -394,35 +383,13 @@
                     <img src="dipinti giulio/1.jpg" class="gallery-image" onclick="openModal(this)" alt="Dipinto 1">
                     <div class="image-caption">Dipinto 1</div>
                 </div>
-                <div class="gallery-item">
-                    <img src="dipinti giulio/2.png" class="gallery-image" onclick="openModal(this)" alt="Dipinto 2">
-                    <div class="image-caption">Dipinto 2</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="dipinti giulio/3.jpg" class="gallery-image" onclick="openModal(this)" alt="Dipinto 3">
-                    <div class="image-caption">Dipinto 3</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="dipinti giulio/4.jpg" class="gallery-image" onclick="openModal(this)" alt="Dipinto 4">
-                    <div class="image-caption">Dipinto 4</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="dipinti giulio/5.jpg" class="gallery-image" onclick="openModal(this)" alt="Dipinto 5">
-                    <div class="image-caption">Dipinto 5</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="dipinti giulio/6.jpg" class="gallery-image" onclick="openModal(this)" alt="Dipinto 6">
-                    <div class="image-caption">Dipinto 6</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="dipinti giulio/7.jpg" class="gallery-image" onclick="openModal(this)" alt="Dipinto 7">
-                    <div class="image-caption">Dipinto 7</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="dipinti giulio/8.jpg" class="gallery-image" onclick="openModal(this)" alt="Dipinto 8">
-                    <div class="image-caption">Dipinto 8</div>
-                </div>
             </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="imageModal" class="modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img class="modal-content" id="modalImage">
         </div>
 
         <!-- Contact and Payment Information -->
@@ -443,3 +410,60 @@
                 - Carta di Credito
                 <br>
                 - Bonifico
+        </p>
+    </div>
+    <script>
+        // Modal functionality
+        function openModal(img) {
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("modalImage");
+            modal.style.display = "flex";
+            modalImg.src = img.src;
+        }
+
+        function closeModal() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById("imageModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Hit counter and viewers functionality
+        let hitCount = parseInt(localStorage.getItem('hitCount')) || 0;
+        let lastHitUpdate = parseInt(localStorage.getItem('lastHitUpdate')) || 0;
+        
+        function updateHitCounter() {
+            const now = Date.now();
+            const threeHours = 3 * 60 * 60 * 1000; // 3 hours in milliseconds
+            
+            if (now - lastHitUpdate >= threeHours) {
+                hitCount += 100;
+                lastHitUpdate = now;
+                localStorage.setItem('hitCount', hitCount);
+                localStorage.setItem('lastHitUpdate', lastHitUpdate);
+            }
+            
+            document.getElementById('hit-counter').textContent = hitCount;
+        }
+
+        function updateOnlineViewers() {
+            const randomViewers = Math.floor(Math.random() * 15) + 1; // Random number between 1 and 15
+            document.getElementById('online-viewers').textContent = randomViewers;
+        }
+
+        // Initial update
+        updateHitCounter();
+        updateOnlineViewers();
+
+        // Update hits every 3 hours
+        setInterval(updateHitCounter, 60 * 1000); // Check every minute
+
+        // Update viewers randomly every 30-60 seconds
+        setInterval(updateOnlineViewers, Math.random() * 30000 + 30000);
+    </script>
+</body>
