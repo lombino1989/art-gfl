@@ -1,256 +1,254 @@
 <!DOCTYPE html>
-<html class="no-js" lang="it">
+<html lang="it">
 <head>
-    <meta http-equiv="Content-Language" content="it">
-    <meta charset="utf-8" />
-    <title>Galleria Arte - G.F.L</title>
-    <meta name="description" content="Galleria d'Arte G.F.L - Collezione di Dipinti"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galleria Dipinti di Giulio</title>
     <style>
-        :root {
-            --primary-color: #1a1f3c;
-            --accent-color: #ff6b6b;
-            --text-color: #ffffff;
-            --light-bg: #2a3052;
-            --header-font: 'Playfair Display', serif;
-        }
-        
-        body { 
-            font-family: 'Lato', Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            line-height: 1.6;
+            box-sizing: border-box;
         }
 
-        .gallery-container {
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-attachment: fixed;
+            color: #333;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+            z-index: -1;
+        }
+
+        header {
+            background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            color: #ffffff;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .gallery-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .gallery-title {
-            font-family: var(--header-font);
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--accent-color);
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 1rem;
         }
 
         .gallery-item {
             position: relative;
             overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-            cursor: pointer;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            transform-origin: center;
+            background: #ffffff;
+            padding: 10px;
         }
 
         .gallery-item:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(106, 17, 203, 0.2), rgba(37, 117, 252, 0.2));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::before {
+            opacity: 1;
         }
 
         .gallery-item img {
             width: 100%;
-            height: 300px;
+            height: 100%;
             object-fit: cover;
             display: block;
-            border: 2px solid red; /* Debug border */
-            background-color: #f0f0f0; /* Debug background */
-        }
-
-        .gallery-item-info {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(26, 31, 60, 0.9);
-            padding: 1rem;
-            transform: translateY(100%);
+            border-radius: 10px;
             transition: transform 0.3s ease;
         }
 
-        .gallery-item:hover .gallery-item-info {
-            transform: translateY(0);
+        .gallery-item:hover img {
+            transform: scale(1.05);
         }
 
-        .gallery-item-title {
-            font-family: var(--header-font);
-            margin: 0;
-            color: var(--accent-color);
-        }
-
-        .gallery-item-description {
-            margin: 0.5rem 0 0;
-            font-size: 0.9rem;
-            color: var(--text-color);
-        }
-
-        /* Modal styles */
-        .modal {
+        /* Lightbox styles */
+        .lightbox {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.95);
             z-index: 1000;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
         }
 
-        .modal-content {
+        .lightbox.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .lightbox img {
             max-width: 90%;
             max-height: 90vh;
-            margin: auto;
-            display: block;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
         }
 
-        .close {
+        .close-lightbox {
             position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #f1f1f1;
+            top: 20px;
+            right: 20px;
+            color: white;
             font-size: 40px;
-            font-weight: bold;
             cursor: pointer;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-lightbox:hover {
+            background: rgba(255,255,255,0.2);
+            transform: rotate(90deg);
         }
 
         @media (max-width: 768px) {
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            h1 {
+                font-size: 2rem;
+            }
+
+            .gallery {
+                padding: 1rem;
                 gap: 1rem;
             }
 
-            .gallery-title {
-                font-size: 2rem;
+            .gallery-item {
+                border-radius: 10px;
             }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="gallery-container">
-        <header class="gallery-header">
-            <h1 class="gallery-title">Galleria d'Arte G.F.L</h1>
-            <p>Esplora la nostra collezione di dipinti</p>
-        </header>
+    <header>
+        <h1>Galleria Dipinti di Giulio</h1>
+        <p>Una collezione di opere d'arte uniche</p>
+    </header>
 
-        <div class="gallery-grid">
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="./dipinti giulio/1.jpg" alt="Dipinto 1" onerror="this.style.backgroundColor='red'">
-                <div class="gallery-item-info">
-                    <h3 class="gallery-item-title">Opera 1</h3>
-                    <p class="gallery-item-description">Dipinto originale G.F.L</p>
-                </div>
-            </div>
-            
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="./dipinti giulio/2.jpg" alt="Dipinto 2">
-                <div class="gallery-item-info">
-                    <h3 class="gallery-item-title">Opera 2</h3>
-                    <p class="gallery-item-description">Dipinto originale G.F.L</p>
-                </div>
-            </div>
-
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="./dipinti giulio/3.jpg" alt="Dipinto 3">
-                <div class="gallery-item-info">
-                    <h3 class="gallery-item-title">Opera 3</h3>
-                    <p class="gallery-item-description">Dipinto originale G.F.L</p>
-                </div>
-            </div>
-
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="./dipinti giulio/4.jpg" alt="Dipinto 4">
-                <div class="gallery-item-info">
-                    <h3 class="gallery-item-title">Opera 4</h3>
-                    <p class="gallery-item-description">Dipinto originale G.F.L</p>
-                </div>
-            </div>
-
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="./dipinti giulio/5.jpg" alt="Dipinto 5">
-                <div class="gallery-item-info">
-                    <h3 class="gallery-item-title">Opera 5</h3>
-                    <p class="gallery-item-description">Dipinto originale G.F.L</p>
-                </div>
-            </div>
-
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="./dipinti giulio/6.jpg" alt="Dipinto 6">
-                <div class="gallery-item-info">
-                    <h3 class="gallery-item-title">Opera 6</h3>
-                    <p class="gallery-item-description">Dipinto originale G.F.L</p>
-                </div>
-            </div>
-
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="./dipinti giulio/7.jpg" alt="Dipinto 7">
-                <div class="gallery-item-info">
-                    <h3 class="gallery-item-title">Opera 7</h3>
-                    <p class="gallery-item-description">Dipinto originale G.F.L</p>
-                </div>
-            </div>
-
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="./dipinti giulio/8.jpg" alt="Dipinto 8">
-                <div class="gallery-item-info">
-                    <h3 class="gallery-item-title">Opera 8</h3>
-                    <p class="gallery-item-description">Dipinto originale G.F.L</p>
-                </div>
-            </div>
-
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="./dipinti giulio/9.jpg" alt="Dipinto 9" onerror="this.style.backgroundColor='red'">
-                <div class="gallery-item-info">
-                    <h3 class="gallery-item-title">Opera 9</h3>
-                    <p class="gallery-item-description">Dipinto originale G.F.L</p>
-                </div>
-            </div>
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="dipinti giulio/1.jpg" alt="Dipinto 1">
+        </div>
+        <div class="gallery-item">
+            <img src="dipinti giulio/2.jpg" alt="Dipinto 2">
+        </div>
+        <div class="gallery-item">
+            <img src="dipinti giulio/3.jpg" alt="Dipinto 3">
+        </div>
+        <div class="gallery-item">
+            <img src="dipinti giulio/4.jpg" alt="Dipinto 4">
+        </div>
+        <div class="gallery-item">
+            <img src="dipinti giulio/5.jpg" alt="Dipinto 5">
+        </div>
+        <div class="gallery-item">
+            <img src="dipinti giulio/6.jpg" alt="Dipinto 6">
+        </div>
+        <div class="gallery-item">
+            <img src="dipinti giulio/7.jpg" alt="Dipinto 7">
+        </div>
+        <div class="gallery-item">
+            <img src="dipinti giulio/8.jpg" alt="Dipinto 8">
+        </div>
+        <div class="gallery-item">
+            <img src="dipinti giulio/9.jpg" alt="Dipinto 9">
+        </div>
+        <div class="gallery-item">
+            <img src="dipinti giulio/10.jpg" alt="Dipinto 10">
+        </div>
+        <div class="gallery-item">
+            <img src="dipinti giulio/11.jpg" alt="Dipinto 11">
         </div>
     </div>
 
-    <!-- Modal -->
-    <div id="imageModal" class="modal">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <img class="modal-content" id="modalImage">
+    <div class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <img src="" alt="Immagine ingrandita">
     </div>
 
     <script>
-        function openModal(element) {
-            const modal = document.getElementById("imageModal");
-            const modalImg = document.getElementById("modalImage");
-            modal.style.display = "block";
-            modalImg.src = element.querySelector('img').src;
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const lightbox = document.querySelector('.lightbox');
+            const lightboxImg = lightbox.querySelector('img');
+            const closeLightbox = document.querySelector('.close-lightbox');
 
-        function closeModal() {
-            document.getElementById("imageModal").style.display = "none";
-        }
+            galleryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const imgSrc = this.querySelector('img').src;
+                    lightboxImg.src = imgSrc;
+                    lightbox.classList.add('active');
+                });
+            });
 
-        // Close modal when clicking outside the image
-        window.onclick = function(event) {
-            const modal = document.getElementById("imageModal");
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
+            closeLightbox.addEventListener('click', function() {
+                lightbox.classList.remove('active');
+            });
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                }
+            });
+        });
     </script>
 </body>
 </html>
