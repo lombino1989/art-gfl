@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galleria Dipinti di Giulio</title>
+    <title>Mostra Arte G.F.L - 19 Marzo 2025</title>
     <style>
         * {
             margin: 0;
@@ -12,243 +12,556 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            background-attachment: fixed;
-            color: #333;
-            position: relative;
+            font-family: 'Playfair Display', serif;
+            background: #1a1a1a;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
-            z-index: -1;
-        }
-
-        header {
-            background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
-            padding: 3rem;
+        .exhibition-banner {
+            background: linear-gradient(45deg, #000428, #004e92);
+            padding: 4rem 2rem;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            margin-bottom: 2rem;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        header p {
-            color: #ffffff;
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .gallery-item {
             position: relative;
             overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            transform-origin: center;
-            background: #ffffff;
-            padding: 10px;
+            border-bottom: 2px solid #gold;
         }
 
-        .gallery-item:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 30px rgba(0,0,0,0.3);
-        }
-
-        .gallery-item::before {
+        .exhibition-banner::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,%3Csvg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%239C92AC" fill-opacity="0.2"%3E%3Cpath d="M0 0h20L10 10zm10 10L20 20H0z"/%3E%3C/g%3E%3C/svg%3E');
+            opacity: 0.1;
+        }
+
+        .exhibition-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .exhibition-date {
+            font-size: 2rem;
+            color: #ffd700;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .social-info {
+            font-size: 1.2rem;
+            color: #fff;
+            opacity: 0.9;
+            margin-top: 1rem;
+        }
+
+        .museum-wall {
+            background: #2a2a2a;
+            padding: 4rem 2rem;
+            margin: 2rem 0;
+            position: relative;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
+            border-top: 10px solid #3a3a3a;
+            border-bottom: 10px solid #3a3a3a;
+        }
+
+        .artwork-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 4rem;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .artwork-frame {
+            position: relative;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(106, 17, 203, 0.2), rgba(37, 117, 252, 0.2));
-            opacity: 0;
+            display: flex;
+            justify-content: center;
+            perspective: 1000px;
+            opacity: 0.85;
             transition: opacity 0.3s ease;
         }
 
-        .gallery-item:hover::before {
-            opacity: 1;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-
-        /* Lightbox styles */
-        .lightbox {
-            display: none;
-            position: fixed;
+        .artwork-lock {
+            position: absolute;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            border: 2px solid #ffd700;
+        }
+
+        .lock-icon {
+            font-size: 3rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .lock-text {
+            color: #fff;
+            text-align: center;
+            font-size: 1.2rem;
+            padding: 1rem;
+        }
+
+        .chain {
+            position: absolute;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 1000;
-            padding: 2rem;
-            backdrop-filter: blur(10px);
+            background-image: repeating-linear-gradient(45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 215, 0, 0.1) 10px,
+                rgba(255, 215, 0, 0.1) 20px);
+            pointer-events: none;
+            z-index: 5;
         }
 
-        .lightbox.active {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease;
+        .artwork {
+            position: relative;
+            max-width: 600px;
+            width: 100%;
+            height: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: rotateX(5deg);
+            transition: transform 0.3s ease;
+            margin: 0 auto;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .lightbox img {
-            max-width: 90%;
-            max-height: 90vh;
+        .artwork img {
+            width: 100%;
+            height: auto;
+            max-height: 450px;
             object-fit: contain;
-            border-radius: 10px;
-            box-shadow: 0 0 30px rgba(255,255,255,0.1);
+            display: block;
+            border: 20px solid #8b7355;
+            box-shadow: 
+                inset 0 0 20px rgba(0,0,0,0.5),
+                0 0 30px rgba(0,0,0,0.3);
+            background: #fff;
+            filter: blur(10px);
         }
 
-        .close-lightbox {
+        .artwork::before {
+            content: '';
             position: absolute;
-            top: 20px;
-            right: 20px;
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255,255,255,0.1);
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 20px;
+            background: #3a3a3a;
             border-radius: 50%;
-            transition: all 0.3s ease;
+            filter: blur(10px);
+            opacity: 0.6;
         }
 
-        .close-lightbox:hover {
-            background: rgba(255,255,255,0.2);
-            transform: rotate(90deg);
+        .artwork-info {
+            position: absolute;
+            left: 50%;
+            bottom: -60px;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-align: center;
+            min-width: 200px;
+            white-space: nowrap;
+        }
+
+        .artwork-number {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .artwork-date {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .spotlight {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100px;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .exhibition-info {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.8);
+            margin: 2rem auto;
+            max-width: 800px;
+            border: 2px solid #ffd700;
+        }
+
+        .exhibition-info h2 {
+            color: #ffd700;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .exhibition-info p {
+            color: #fff;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .countdown {
+            font-size: 1.5rem;
+            color: #ffd700;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 1200px) {
+            .artwork-container {
+                grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            }
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
+            .artwork-container {
+                grid-template-columns: 1fr;
             }
-
-            .gallery {
-                padding: 1rem;
-                gap: 1rem;
-            }
-
-            .gallery-item {
-                border-radius: 10px;
+            
+            .museum-wall {
+                padding: 2rem 1rem;
             }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>Galleria Dipinti di Giulio</h1>
-        <p>Una collezione di opere d'arte uniche</p>
+    <header class="exhibition-banner">
+        <h1 class="exhibition-title">Arte G.F.L</h1>
+        <div class="exhibition-date">19 Marzo 2025</div>
+        <p class="social-info">Online Mostra Arte su Facebook</p>
     </header>
 
-    <div class="gallery">
-        <div class="gallery-item">
-            <img src="dipinti giulio/1.jpg" alt="Dipinto 1">
-        </div>
-        <div class="gallery-item">
-            <img src="dipinti giulio/2.jpg" alt="Dipinto 2">
-        </div>
-        <div class="gallery-item">
-            <img src="dipinti giulio/3.jpg" alt="Dipinto 3">
-        </div>
-        <div class="gallery-item">
-            <img src="dipinti giulio/4.jpg" alt="Dipinto 4">
-        </div>
-        <div class="gallery-item">
-            <img src="dipinti giulio/5.jpg" alt="Dipinto 5">
-        </div>
-        <div class="gallery-item">
-            <img src="dipinti giulio/6.jpg" alt="Dipinto 6">
-        </div>
-        <div class="gallery-item">
-            <img src="dipinti giulio/7.jpg" alt="Dipinto 7">
-        </div>
-        <div class="gallery-item">
-            <img src="dipinti giulio/8.jpg" alt="Dipinto 8">
-        </div>
-        <div class="gallery-item">
-            <img src="dipinti giulio/9.jpg" alt="Dipinto 9">
-        </div>
-        <div class="gallery-item">
-            <img src="dipinti giulio/10.jpg" alt="Dipinto 10">
-        </div>
-        <div class="gallery-item">
-            <img src="dipinti giulio/11.jpg" alt="Dipinto 11">
-        </div>
+    <div class="exhibition-info">
+        <h2>Mostra in Arrivo</h2>
+        <p>Le opere saranno rivelate il 19 Marzo 2025 sulla nostra pagina Facebook.</p>
+        <div class="countdown">Mancano 18 giorni all'apertura</div>
     </div>
 
-    <div class="lightbox">
-        <span class="close-lightbox">&times;</span>
-        <img src="" alt="Immagine ingrandita">
+    <div class="virtual-museum">
+        <section class="museum-wall">
+            <div class="artwork-container">
+                <!-- Dipinti in ordine cronologico -->
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250212_152506.jpg" alt="Opera d'arte - 12 Febbraio" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250214_175547.jpg" alt="Opera d'arte - 14 Febbraio" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250215_064044.jpg" alt="Opera d'arte - 15 Febbraio" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250215_081435.jpg" alt="Opera d'arte - 15 Febbraio" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250218_081710.jpg" alt="Opera d'arte - 18 Febbraio" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250218_142900.jpg" alt="Opera d'arte - 18 Febbraio" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250218_184708.jpg" alt="Opera d'arte - 18 Febbraio" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250218_185721.jpg" alt="Opera d'arte - 18 Febbraio" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250219_065049.jpg" alt="Opera d'arte - 19 Febbraio" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250221_152348.jpg" alt="Opera d'arte - 21 Febbraio" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250221_154849.jpg" alt="Opera d'arte - 21 Febbraio" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250221_154930.jpg" alt="Opera d'arte - 21 Febbraio" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250222_092210.jpg" alt="Opera d'arte - 22 Febbraio" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250227_194952.jpg" alt="Opera d'arte - 27 Febbraio" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250228_121728.jpg" alt="Opera d'arte - 28 Febbraio" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <!-- Opere del 1 Marzo 2025 -->
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250301_001825.jpg" alt="Opera d'arte - 1 Marzo" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250301_001923.jpg" alt="Opera d'arte - 1 Marzo" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250301_001952.jpg" alt="Opera d'arte - 1 Marzo" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250301_002024.jpg" alt="Opera d'arte - 1 Marzo" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250301_002045.jpg" alt="Opera d'arte - 1 Marzo" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250301_002101.jpg" alt="Opera d'arte - 1 Marzo" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250301_002124.jpg" alt="Opera d'arte - 1 Marzo" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250301_002141.jpg" alt="Opera d'arte - 1 Marzo" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250301_002232.jpg" alt="Opera d'arte - 1 Marzo" style="filter: blur(10px);">
+                    </figure>
+                </div>
+
+                <div class="artwork-frame">
+                    <div class="artwork-lock">
+                        <i class="fas fa-lock lock-icon"></i>
+                        <div class="lock-text">Opera Bloccata</div>
+                    </div>
+                    <div class="chain"></div>
+                    <figure class="artwork">
+                        <img src="dipinti giulio/dipinti giulio/IMG_20250301_002244.jpg" alt="Opera d'arte - 1 Marzo" style="filter: blur(10px);">
+                    </figure>
+                </div>
+            </div>
+        </section>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const galleryItems = document.querySelectorAll('.gallery-item');
-            const lightbox = document.querySelector('.lightbox');
-            const lightboxImg = lightbox.querySelector('img');
-            const closeLightbox = document.querySelector('.close-lightbox');
+        // Aggiorna il countdown
+        function updateCountdown() {
+            const eventDate = new Date('2025-03-19');
+            const now = new Date();
+            const diffTime = Math.abs(eventDate - now);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            document.querySelector('.countdown').textContent = `Mancano ${diffDays} giorni all'apertura`;
+        }
 
-            galleryItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const imgSrc = this.querySelector('img').src;
-                    lightboxImg.src = imgSrc;
-                    lightbox.classList.add('active');
-                });
-            });
-
-            closeLightbox.addEventListener('click', function() {
-                lightbox.classList.remove('active');
-            });
-
-            lightbox.addEventListener('click', function(e) {
-                if (e.target === lightbox) {
-                    lightbox.classList.remove('active');
-                }
-            });
-        });
+        updateCountdown();
+        setInterval(updateCountdown, 86400000); // Aggiorna ogni giorno
     </script>
 </body>
 </html>
