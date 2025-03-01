@@ -19,6 +19,57 @@
             overflow-x: hidden;
         }
 
+        .museum-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 26, 0.95);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #8b7355;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.3);
+        }
+
+        .flags {
+            display: flex;
+            gap: 20px;
+            margin-left: 20px;
+        }
+
+        .flag {
+            width: 40px;
+            height: 26px;
+            border: 1px solid rgba(255,215,0,0.3);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .counters {
+            display: flex;
+            gap: 20px;
+            margin-right: 20px;
+        }
+
+        .counter-box {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 15px;
+            border-radius: 3px;
+            color: #ffd700;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,215,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .counter-box i {
+            color: #ffd700;
+        }
+
         .exhibition-banner {
             background: linear-gradient(45deg, #000428, #004e92);
             padding: 4rem 2rem;
@@ -26,6 +77,7 @@
             position: relative;
             overflow: hidden;
             border-bottom: 2px solid #gold;
+            margin-top: 60px;  /* Add space for fixed header */
         }
 
         .exhibition-banner::before {
@@ -227,13 +279,6 @@
             line-height: 1.6;
         }
 
-        .countdown {
-            font-size: 1.5rem;
-            color: #ffd700;
-            margin-top: 1rem;
-            font-weight: bold;
-        }
-
         @media (max-width: 1200px) {
             .artwork-container {
                 grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
@@ -254,6 +299,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
+    <header class="museum-header">
+        <div class="flags">
+            <img src="https://upload.wikimedia.org/wikipedia/en/0/03/Flag_of_Italy.svg" alt="Bandiera Italiana" class="flag">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg" alt="Bandiera Europea" class="flag">
+        </div>
+        <div class="counters">
+            <div class="counter-box">
+                <i class="fas fa-eye"></i>
+                <span id="visitorCount">0</span> visite
+            </div>
+            <div class="counter-box">
+                <i class="fas fa-clock"></i>
+                <span id="countdown"></span>
+            </div>
+        </div>
+    </header>
+
     <header class="exhibition-banner">
         <h1 class="exhibition-title">Arte G.F.L</h1>
         <div class="exhibition-date">19 Marzo 2025</div>
@@ -263,7 +325,6 @@
     <div class="exhibition-info">
         <h2>Mostra in Arrivo</h2>
         <p>Le opere saranno rivelate il 19 Marzo 2025 sulla nostra pagina Facebook.</p>
-        <div class="countdown">Mancano 18 giorni all'apertura</div>
     </div>
 
     <div class="virtual-museum">
@@ -550,18 +611,40 @@
     </div>
 
     <script>
-        // Aggiorna il countdown
-        function updateCountdown() {
-            const eventDate = new Date('2025-03-19');
-            const now = new Date();
-            const diffTime = Math.abs(eventDate - now);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            document.querySelector('.countdown').textContent = `Mancano ${diffDays} giorni all'apertura`;
+        // Funzione per il contatore visite
+        function updateVisitorCount() {
+            let count = localStorage.getItem('visitorCount');
+            if (!count) {
+                count = 0;
+            }
+            count = parseInt(count) + 1;
+            localStorage.setItem('visitorCount', count);
+            document.getElementById('visitorCount').textContent = count;
         }
 
+        // Funzione per il countdown
+        function updateCountdown() {
+            const now = new Date();
+            const eventDate = new Date('2025-03-19T00:00:00');
+            const timeLeft = eventDate - now;
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+
+            if (timeLeft < 0) {
+                document.getElementById('countdown').textContent = "Evento in corso!";
+            } else {
+                document.getElementById('countdown').textContent = `${days}g ${hours}h ${minutes}m`;
+            }
+        }
+
+        // Aggiorna il contatore visite e il countdown
+        updateVisitorCount();
         updateCountdown();
-        setInterval(updateCountdown, 86400000); // Aggiorna ogni giorno
+        
+        // Aggiorna il countdown ogni minuto
+        setInterval(updateCountdown, 60000);
     </script>
 </body>
 </html>
